@@ -21,7 +21,6 @@ WxCleaner 是一款专为清理微信接收文件而设计的轻量级、跨平�
 *   **GUI 框架**: [ttkbootstrap](https://github.com/israel-dryer/ttkbootstrap) (基于 Tkinter)
 *   **核心依赖**: 
     *   `send2trash`: 跨平台安全删除（移至系统回收站/废纸篓）。
-    *   `pytest` / `pytest-cov`: 自动化测试与代码覆盖率保障。
 *   **打包构建**: PyInstaller (Windows `.exe`)
 
 ---
@@ -80,20 +79,6 @@ python main.py
     *   可点击 **"全选重复项"** 或手动多选/调整勾选状态。
     *   确认无误后，点击 **"移至回收站"**。
     *   在二次确认弹窗中点击确认，系统将安全地把选中的文件移动到回收站/废纸篓。
-
----
-
-## 🧪 自动化测试
-
-本项目拥有完善的单元与跨平台测试套件，可直接运行：
-
-```bash
-# 运行全部测试
-pytest
-
-# 运行测试并生成代码覆盖率报告
-pytest --cov=.
-```
 
 ---
 

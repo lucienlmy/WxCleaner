@@ -8,11 +8,12 @@ build/
 dist/
 *.spec
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# Conductor framework
+conductor/
 
-# Unit test / coverage reports
+# Tests & test configs
+tests/
+pytest.ini
 htmlcov/
 .tox/
 .nox/
@@ -27,6 +28,10 @@ coverage.xml
 .pytest_cache/
 cover/
 
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
@@ -36,9 +41,6 @@ cover/
 # celery worker pidfiles
 celerybeat-schedule
 celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
 
 # Environments
 .env
@@ -70,10 +72,8 @@ dmypy.json
 # PyInstaller
 *.manifest
 
-# VS Code
+# VS Code / IDE temp
 .vscode/
-
-# Trae/IDE temp
 .gemini/
 tmp/
 *.log
