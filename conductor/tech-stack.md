@@ -2,13 +2,15 @@
 
 ## 核心语言与运行时
 - **语言**: Python 3.8+
-- **目标平台**: Windows (原生支持), 可移植跨平台
+- **目标平台**: Windows、macOS (Darwin)、Linux (跨平台兼容)
 
 ## 界面与图形框架 (GUI)
-- **GUI 框架**: `ttkbootstrap` (v1.10+) - 提供现代化 Flat 主题、高 DPI 字体适配、现代化组件库。
+- **GUI 框架**: `ttkbootstrap` (v1.10+) - 提供现代化 Flat 主题、自适应字体与高 DPI 适配、现代化组件库。
 - **底层支持**: Tkinter (Python 标准库)
 
 ## 核心库与系统交互
+- **跨平台工具支持**:
+  - `platform_utils.py`: 操作系统自适应字体、跨平台文件管理器唤起、微信默认存储目录自动探测、ICO 图标平台守卫。
 - **文件去重与哈希**:
   - `hashlib` (SHA-256): 分级（头部 Partial Hash 1024B + 全量 Full Hash）去重算法。
   - `collections.defaultdict`: 高效哈希分组。
@@ -21,5 +23,4 @@
   - `pytest`: 单元与集成自动化测试套件。
   - `pytest-cov`: 代码覆盖率统计。
 - **系统集成与打包**:
-  - `ctypes` (`windll`): Windows 系统层与高分屏适配。
-  - `PyInstaller`: 单文件 `.exe` 二进制打包与资源打包集成（`icon.ico`）。
+  - `PyInstaller`: 二进制打包与资源打包集成（`icon.ico`）。
