@@ -11,7 +11,7 @@
 - [x] Task: 运行 pytest 确认全部测试通过 (Green Phase 验证) [4139971]
 - [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [4139971]
 
-## Phase 3: 回归与代码质量门禁
+## Phase 3: 回归与代码质量门禁 [checkpoint: 4139971]
 - [x] Task: 运行完整 pytest 套件并确保无回归 [4139971]
 - [x] Task: 在 Windows 上执行 main.py 启动验证 [4139971]
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [4139971]
