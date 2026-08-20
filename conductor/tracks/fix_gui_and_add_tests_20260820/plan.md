@@ -1,10 +1,10 @@
 # 实施计划 (Implementation Plan) - 完善 GUI 逻辑与核心测试套件
 
-## Phase 1: 测试框架搭建与扫描算法单测 (TDD)
+## Phase 1: 测试框架搭建与扫描算法单测 (TDD) [checkpoint: 41bb68d]
 - [x] Task: 配置 pytest 测试框架与 requirements.txt 更新 [f406d2b]
 - [x] Task: 编写 scanner.py 单元测试 (`tests/test_scanner.py`) [ea81014]
 - [x] Task: 运行 pytest 验证算法测试通过与覆盖率 [41bb68d]
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [41bb68d]
 
 ## Phase 2: 修复并完善 wx_gui.py 功能
 - [ ] Task: 同步补全 wx_gui.py 的 resource_path 与 sort_column 排序逻辑
