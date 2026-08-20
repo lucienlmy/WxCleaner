@@ -7,9 +7,9 @@
 - [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [41bb68d]
 
 ## Phase 2: 修复并完善 wx_gui.py 功能
-- [ ] Task: 同步补全 wx_gui.py 的 resource_path 与 sort_column 排序逻辑
-- [ ] Task: 补齐 delete_selected 与 show_delete_report 多线程安全删除
-- [ ] Task: 编写删除逻辑 Mock 测试 (`tests/test_gui_utils.py`)
+- [x] Task: 同步补全 wx_gui.py 的 resource_path 与 sort_column 排序逻辑 [d6e4632]
+- [x] Task: 补齐 delete_selected 与 show_delete_report 多线程安全删除 [d6e4632]
+- [x] Task: 编写删除逻辑 Mock 测试 (`tests/test_gui_utils.py`) [d6e4632]
 - [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
 
 ## Phase 3: 端到端集成与代码质量门禁
