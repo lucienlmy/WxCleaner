@@ -13,6 +13,6 @@
 - [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [d6e4632]
 
 ## Phase 3: 端到端集成与代码质量门禁
-- [ ] Task: 运行完整 pytest 测试套件并确保无回归
-- [ ] Task: 执行 main.py 入口启动与打包 spec 一致性检查
+- [x] Task: 运行完整 pytest 测试套件并确保无回归 [d6e4632]
+- [x] Task: 执行 main.py 入口启动与打包 spec 一致性检查 [d6e4632]
 - [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
