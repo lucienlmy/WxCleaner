@@ -1,7 +1,7 @@
 # 实施计划 (Implementation Plan) - 完善 GUI 逻辑与核心测试套件
 
 ## Phase 1: 测试框架搭建与扫描算法单测 (TDD)
-- [ ] Task: 配置 pytest 测试框架与 requirements.txt 更新
+- [x] Task: 配置 pytest 测试框架与 requirements.txt 更新 [f406d2b]
 - [ ] Task: 编写 scanner.py 单元测试 (`tests/test_scanner.py`)
 - [ ] Task: 运行 pytest 验证算法测试通过与覆盖率
 - [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
