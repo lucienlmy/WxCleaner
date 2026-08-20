@@ -6,9 +6,9 @@
 - [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [28cc45a]
 
 ## Phase 2: 实现跨平台工具函数与集成 (Green Phase)
-- [ ] Task: 提取并实现跨平台工具函数
-- [ ] Task: 集成工具函数到 wx_gui.py 与 WxCleaner_bundled.py
-- [ ] Task: 运行 pytest 确认全部测试通过 (Green Phase 验证)
+- [x] Task: 提取并实现跨平台工具函数 [4139971]
+- [x] Task: 集成工具函数到 wx_gui.py 与 WxCleaner_bundled.py [4139971]
+- [x] Task: 运行 pytest 确认全部测试通过 (Green Phase 验证) [4139971]
 - [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
 
 ## Phase 3: 回归与代码质量门禁
