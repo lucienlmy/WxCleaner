@@ -7,21 +7,59 @@ import os
 import sys
 import time
 import hashlib
+import subprocess
 import concurrent.futures
 from collections import defaultdict
 from send2trash import send2trash
-# from PIL import Image, ImageTk # 移除未使用的引用
-from ctypes import windll
 
 # ==========================================
-# 辅助函数
+# 跨平台辅助函数
 # ==========================================
 
 def resource_path(relative_path):
-    """ 获取资源绝对路径，适配 PyInstaller 打包后的路径 """
+    """ 获取资源绝对路径，适配 PyInstaller 打包后的路径与源码运行路径 """
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
+
+def get_platform_font(is_bold=False, size=10):
+    """ 根据操作系统自适应字体配置 """
+    if sys.platform == "darwin":
+        font_family = "PingFang SC"
+    elif sys.platform == "win32":
+        font_family = "Microsoft YaHei"
+    else:
+        font_family = "Noto Sans CJK SC"
+
+    if is_bold:
+        return (font_family, size, "bold")
+    return (font_family, size)
+
+def should_load_ico():
+    """ 仅在 Windows 下加载 .ico 图标 """
+    return sys.platform == "win32"
+
+def get_default_wechat_path():
+    """ 获取各平台微信默认文件存储路径 """
+    if sys.platform == "win32":
+        return os.path.join(os.path.expanduser("~"), "Documents", "WeChat Files")
+    elif sys.platform == "darwin":
+        return os.path.expanduser("~/Library/Containers/com.tencent.xinWeChat/")
+    return ""
+
+def open_in_file_manager(folder_path):
+    """ 跨平台打开文件管理器 """
+    if sys.platform == "win32":
+        os.startfile(os.path.normpath(folder_path))
+    elif sys.platform == "darwin":
+        subprocess.Popen(["open", folder_path])
+    else:
+        subprocess.Popen(["xdg-open", folder_path])
+
+def normalize_file_path(path):
+    """ 跨平台规范化绝对路径 """
+    return os.path.abspath(os.path.normpath(path))
+
 
 # ==========================================
 # 核心扫描逻辑
@@ -120,26 +158,31 @@ class WxCleanerApp:
         self.root.title("微信重复文件清理工具")
         self.root.geometry("1100x800")
         
-        # 恢复默认字体设置
-        self.ui_font_normal = ("Microsoft YaHei", 10)
-        self.ui_font_bold = ("Microsoft YaHei", 10, "bold")
+        # 跨平台字体配置
+        self.ui_font_normal = get_platform_font(is_bold=False, size=10)
+        self.ui_font_bold = get_platform_font(is_bold=True, size=10)
         
         # 设置窗口图标
-        try:
-            icon_file = resource_path("icon.ico")
-            if os.path.exists(icon_file):
-                self.root.iconbitmap(icon_file)
-        except Exception as e:
-            print(f"图标加载失败: {e}")
+        if should_load_ico():
+            try:
+                icon_file = resource_path("icon.ico")
+                if os.path.exists(icon_file):
+                    self.root.iconbitmap(icon_file)
+            except Exception as e:
+                print(f"图标加载失败: {e}")
         
         # 设置全局字体
         self.root.option_add("*Font", self.ui_font_normal)
         
         style = ttk.Style()
         style.configure("Treeview", font=self.ui_font_normal, rowheight=30)
-        style.configure("Treeview.Heading", font=self.ui_font_bold)
+        style.configure("Treeview.Heading", font=get_platform_font(is_bold=True, size=11))
         
         self.scan_path = tk.StringVar()
+        default_path = get_default_wechat_path()
+        if default_path and os.path.exists(default_path):
+            self.scan_path.set(default_path)
+            
         self.duplicates = {} 
         
         self.setup_ui()
@@ -340,7 +383,7 @@ class WxCleanerApp:
         path = self.tree.item(selected[0])['values'][1]
         try:
             folder = os.path.dirname(path)
-            os.startfile(folder)
+            open_in_file_manager(folder)
         except Exception as e:
             messagebox.showerror("错误", f"无法打开文件夹: {e}")
 
@@ -385,11 +428,12 @@ class WxCleanerApp:
         progress_win.grab_set()
         
         # 设置弹窗图标
-        try:
-            icon_file = resource_path("icon.ico")
-            if os.path.exists(icon_file):
-                progress_win.iconbitmap(icon_file)
-        except: pass
+        if should_load_ico():
+            try:
+                icon_file = resource_path("icon.ico")
+                if os.path.exists(icon_file):
+                    progress_win.iconbitmap(icon_file)
+            except: pass
         
         x = self.root.winfo_x() + (self.root.winfo_width() // 2) - 200
         y = self.root.winfo_y() + (self.root.winfo_height() // 2) - 75
@@ -417,7 +461,7 @@ class WxCleanerApp:
         items_to_process = []
         for item in selected_items:
             raw_path = self.tree.item(item)['values'][1]
-            path = os.path.abspath(raw_path)
+            path = normalize_file_path(raw_path)
             items_to_process.append((item, path))
         
         success_count = 0

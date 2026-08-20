@@ -9,6 +9,13 @@ import time
 import concurrent.futures
 from send2trash import send2trash
 from scanner import find_duplicates
+from platform_utils import (
+    get_platform_font,
+    open_in_file_manager,
+    get_default_wechat_path,
+    should_load_ico,
+    normalize_file_path,
+)
 
 def resource_path(relative_path):
     """ 获取资源绝对路径，适配 PyInstaller 打包后的路径与开发路径 """
@@ -22,17 +29,18 @@ class WxCleanerApp:
         self.root.title("WxCleaner - 微信重复文件清理工具")
         self.root.geometry("1100x800")
         
-        # 字体配置
-        self.ui_font_normal = ("Microsoft YaHei", 10)
-        self.ui_font_bold = ("Microsoft YaHei", 10, "bold")
+        # 跨平台字体配置
+        self.ui_font_normal = get_platform_font(is_bold=False, size=10)
+        self.ui_font_bold = get_platform_font(is_bold=True, size=10)
         
-        # 设置窗口图标 (运行时)
-        try:
-            icon_file = resource_path("icon.ico")
-            if os.path.exists(icon_file):
-                self.root.iconbitmap(icon_file)
-        except Exception as e:
-            print(f"图标加载失败: {e}")
+        # 设置窗口图标 (仅在 Windows 原生支持时加载)
+        if should_load_ico():
+            try:
+                icon_file = resource_path("icon.ico")
+                if os.path.exists(icon_file):
+                    self.root.iconbitmap(icon_file)
+            except Exception as e:
+                print(f"图标加载失败: {e}")
         
         # 设置全局字体大小
         self.root.option_add("*Font", self.ui_font_normal)
@@ -40,9 +48,14 @@ class WxCleanerApp:
         # 针对特定的 Treeview 设置样式
         style = ttk.Style()
         style.configure("Treeview", font=self.ui_font_normal, rowheight=30)
-        style.configure("Treeview.Heading", font=self.ui_font_bold)
+        style.configure("Treeview.Heading", font=get_platform_font(is_bold=True, size=11))
         
         self.scan_path = tk.StringVar()
+        # 自动探测并预填默认微信路径（若目录存在）
+        default_path = get_default_wechat_path()
+        if default_path and os.path.exists(default_path):
+            self.scan_path.set(default_path)
+            
         self.duplicates = {} # {hash: [paths]}
         
         self.setup_ui()
@@ -259,7 +272,7 @@ class WxCleanerApp:
         path = self.tree.item(selected[0])['values'][1]
         try:
             folder = os.path.dirname(path)
-            os.startfile(folder)
+            open_in_file_manager(folder)
         except Exception as e:
             messagebox.showerror("错误", f"无法打开文件夹: {e}")
 
@@ -304,11 +317,12 @@ class WxCleanerApp:
         progress_win.grab_set()
         
         # 设置弹窗图标
-        try:
-            icon_file = resource_path("icon.ico")
-            if os.path.exists(icon_file):
-                progress_win.iconbitmap(icon_file)
-        except: pass
+        if should_load_ico():
+            try:
+                icon_file = resource_path("icon.ico")
+                if os.path.exists(icon_file):
+                    progress_win.iconbitmap(icon_file)
+            except: pass
         
         x = self.root.winfo_x() + (self.root.winfo_width() // 2) - 200
         y = self.root.winfo_y() + (self.root.winfo_height() // 2) - 75
@@ -336,7 +350,7 @@ class WxCleanerApp:
         items_to_process = []
         for item in selected_items:
             raw_path = self.tree.item(item)['values'][1]
-            path = os.path.abspath(raw_path)
+            path = normalize_file_path(raw_path)
             items_to_process.append((item, path))
         
         success_count = 0
@@ -418,7 +432,7 @@ class WxCleanerApp:
                 try:
                     parts = s.split()
                     if len(parts) != 2: return 0
-                    return float(parts[0]) * {'B':1, 'KB':1024, 'MB':1024**2, 'GB':1024**3, 'TB':1024**4}.get(parts[1], 1)
+                    return float(parts[0]) * {'B':1, 'KB':1024, 'MB':1024**2, 'GB':1024**3}.get(parts[1], 1)
                 except: return 0
             l.sort(key=lambda x: get_bytes(x[0]), reverse=reverse)
         elif col == "num":
