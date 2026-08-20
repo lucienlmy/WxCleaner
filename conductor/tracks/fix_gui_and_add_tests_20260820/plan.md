@@ -12,7 +12,7 @@
 - [x] Task: 编写删除逻辑 Mock 测试 (`tests/test_gui_utils.py`) [d6e4632]
 - [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [d6e4632]
 
-## Phase 3: 端到端集成与代码质量门禁
+## Phase 3: 端到端集成与代码质量门禁 [checkpoint: d6e4632]
 - [x] Task: 运行完整 pytest 测试套件并确保无回归 [d6e4632]
 - [x] Task: 执行 main.py 入口启动与打包 spec 一致性检查 [d6e4632]
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [d6e4632]
