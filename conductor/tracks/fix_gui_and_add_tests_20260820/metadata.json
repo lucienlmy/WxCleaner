@@ -2,7 +2,7 @@
   "id": "fix_gui_and_add_tests_20260820",
   "name": "完善 GUI 逻辑与核心测试套件",
   "type": "refactor",
-  "status": "new",
+  "status": "completed",
   "created_at": "2026-08-20T18:13:00+08:00",
-  "updated_at": "2026-08-20T18:13:00+08:00"
+  "updated_at": "2026-08-20T18:19:30+08:00"
 }
