@@ -3,7 +3,7 @@
 ## Phase 1: 测试框架搭建与扫描算法单测 (TDD)
 - [x] Task: 配置 pytest 测试框架与 requirements.txt 更新 [f406d2b]
 - [x] Task: 编写 scanner.py 单元测试 (`tests/test_scanner.py`) [ea81014]
-- [~] Task: 运行 pytest 验证算法测试通过与覆盖率
+- [x] Task: 运行 pytest 验证算法测试通过与覆盖率 [41bb68d]
 - [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
 
 ## Phase 2: 修复并完善 wx_gui.py 功能
