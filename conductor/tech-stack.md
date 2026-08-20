@@ -17,6 +17,9 @@
 - **并发与异步调度**:
   - `threading`: 扫描工作线程与 UI 线程解耦。
   - `concurrent.futures.ThreadPoolExecutor`: 多线程批量并发文件回收处理。
+- **测试框架与质量门禁**:
+  - `pytest`: 单元与集成自动化测试套件。
+  - `pytest-cov`: 代码覆盖率统计。
 - **系统集成与打包**:
   - `ctypes` (`windll`): Windows 系统层与高分屏适配。
   - `PyInstaller`: 单文件 `.exe` 二进制打包与资源打包集成（`icon.ico`）。
